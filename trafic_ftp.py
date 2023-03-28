@@ -23,6 +23,22 @@ password = "azerty"
 # the FTP server directory where the files will be uploaded or downloaded
 directory = "/home/ftpuser"
 
+# generate 20 files with random content in the current directory where the script is executed
+def generate_files():
+    for i in range(20):
+        filename = f"file{i}.txt"
+        content = "".join(random.choices("abcdefghijklmnopqrstuvwxyz", k=100))
+        with open(filename, "w") as f:
+            f.write(content)
+
+# delete all files in the current directory where the script is executed
+def delete_files():
+    files = os.listdir()
+    for file in files:
+        os.remove(file)
+
+    
+    
 # list all files present in the FTP server directory
 def list_files():
     ftp = ftplib.FTP() # create a new FTP object
@@ -62,6 +78,10 @@ def upload_file(filename):
 # main function
 if __name__ == "__main__":
     start_time = time.time() # get the current time
+    # delete all files in the current directory where the script is executed
+    delete_files()
+    # generate 20 files with random content in the current directory where the script is executed
+    generate_files()
     # loop for 2 hours
     while time.time() - start_time < 7200:
         # wait between 1 and 5 minutes before connecting to the FTP server
