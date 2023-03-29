@@ -1,1 +1,4 @@
 /.idea
+# csv files
+*.csv
+*.arff
