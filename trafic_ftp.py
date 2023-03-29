@@ -29,12 +29,9 @@ def generate_files():
         with open(filename, "w") as f:
             f.write(content)
 
-# delete all files in the current directory where the script is executed
+# delete all files in the current directory where the script is executed expect all python files
 def delete_files():
-    files = os.listdir()
-    for file in files:
-        os.remove(file)
-
+    [os.remove(file) for file in os.listdir() if not file.endswith('.py')]
     
     
 # list all files present in the FTP server directory
@@ -61,6 +58,8 @@ def download_file(filename):
     ftp.cwd(directory) # change the current working directory to the FTP server directory
     with open(filename, "wb") as f: # open the file in binary write mode
         ftp.retrbinary(f"RETR {filename}", f.write) # download the file from the FTP server
+        # print number of bytes downloaded
+        print(f"Downloaded {f.tell()} bytes from {filename}")
     ftp.quit() # quit the FTP session
 
 # upload a file to the FTP server
@@ -71,6 +70,8 @@ def upload_file(filename):
     ftp.cwd(directory) # change the current working directory to the FTP server directory
     with open(filename, "rb") as f: # open the file in binary read mode
         ftp.storbinary(f"STOR {filename}", f) # upload the file to the FTP server
+        # print number of bytes uploaded
+        print(f"Uploaded {f.tell()} bytes to {filename}")
     ftp.quit() # quit the FTP session
 
 # main function
