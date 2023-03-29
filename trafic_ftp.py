@@ -25,7 +25,7 @@ directory = "/home/ftpuser"
 def generate_files():
     for i in range(20):
         filename = f"file{i}.txt"
-        content = "".join(random.choices("abcdefghijklmnopqrstuvwxyz", k=100))
+        content = "".join(random.choices("abcdefghijklmnopqrstuvwxyz", k=3000))
         with open(filename, "w") as f:
             f.write(content)
 
@@ -83,8 +83,6 @@ if __name__ == "__main__":
     generate_files()
     # loop for 2 hours
     while time.time() - start_time < 7200:
-        # wait between 1 and 5 minutes before connecting to the FTP server
-        time.sleep(random.randint(60, 300))
         # get the list of files in the FTP server directory
         files_dowload = list_files()
         files_upload =  list_file_upload()
@@ -101,3 +99,5 @@ if __name__ == "__main__":
             upload_file(filename)
         # print the action and the file name
         print(f"{action} {filename}")
+        # wait between 1 and 5 minutes before connecting to the FTP server
+        time.sleep(random.randint(60, 300))
