@@ -66,6 +66,7 @@ ddos_features_dict = {name: np.array(value)
 
 features_dict = {name: values[:1] for name, values in ddos_features_dict.items()}
 
+
 # Build model tensorflow ########################################"###
 
 # Fonction pr création model
