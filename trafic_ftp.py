@@ -16,10 +16,8 @@ port = 21
 
 # the FTP server username
 username = "ftpuser"
-
 # the FTP server password
 password = "azerty"
-
 # the FTP server directory where the files will be uploaded or downloaded
 directory = "/home/ftpuser"
 
