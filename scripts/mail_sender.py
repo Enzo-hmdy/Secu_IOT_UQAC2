@@ -1,9 +1,8 @@
 import smtplib
 
-# CECI EST UN MAIL PERSONNEL D'UN MEMBRE DE PROJET : NE PAS ABUSER SON UTILISATION
-
-# email : lyondebastia@gmail.com
-# app pwd : hefhouhgchnsbkse
+# email : secuiotuqac@gmail.com
+# mail pwd : Z4G8zng5atNQL2BPhMCs
+# app pwd : qimgsrtsagcixeck
 
 import smtplib
 from email.mime.text import MIMEText
@@ -23,8 +22,8 @@ def send_email(subject, body, sender, recipients, password):
 # utilisez celui-ci pour l'envoi de notification
 def notify(recipient_mail, detected_label):
     subject = "Détection du Raspberry Pi"
-    sender = "lyondebastia@gmail.com"
-    password = "hefhouhgchnsbkse"
+    sender = "secuiotuqac@gmail.com"
+    password = "qimgsrtsagcixeck"
     recipients = [recipient_mail]
     body = "\nNous avons détecté une attaque type : "+detected_label+"\n"
     send_email(subject, body, sender, recipients, password)
